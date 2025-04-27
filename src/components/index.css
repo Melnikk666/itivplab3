@@ -600,18 +600,19 @@ ul li a {
 }
 .comments-section {
     display: flex;
+    flex-wrap: wrap;
     max-width: 85%;
     margin-left: auto;
     margin-right: auto;
     align-items: stretch;
 }
 .comment {
-    width: 33.755274261603375rem;
+    width: calc((100% - 2 * 1rem) / 3); /* Ширина каждого элемента с учетом отступов */
     height: 33.755274261603375rem;
     padding-left: 2.5316455696202533rem;
     background: linear-gradient(45deg, #2E2BD0, #7876F2);
     border-radius: 2.109704641350211rem;
-    align-items: flex-start;
+    box-sizing: border-box; /* Учитываем padding в ширине */
 }
 .people-name {
     font-family: 'Montserrat';
@@ -785,6 +786,21 @@ ul li a {
     display: none;
 }
 
+
+.contact-form.input {
+    flex-grow: 1; /* Чтобы поля растягивались на доступное пространство */
+    padding: 0.5rem;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+    color: #f0f0f0;
+
+  }
+
+
+  .contact-form.input::placeholder {
+    color: rgb(255, 255, 255);
+    opacity: 0.5;
+}
 
 /* Стили для мобильной версии */
 @media (max-width: 430px) {

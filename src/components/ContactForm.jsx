@@ -7,6 +7,26 @@ const ContactForm = () => {
   const [message, setMessage] = useState("");
   const [errors, setErrors] = useState({});
 
+  const handleNameChange = (e) => {
+    let value = e.target.value;
+
+    // Удалить начальные пробелы
+    value = value.replace(/^\s+/, "");
+
+    // Ограничить длину
+    value = value.slice(0, 30);
+
+    // Подсчитать количество пробелов
+    const spaceCount = (value.match(/ /g) || []).length;
+
+    // Блокировать ввод третьего пробела
+    if (spaceCount > 2 && value.endsWith(" ")) {
+      value = value.slice(0, -1);
+    }
+
+    setName(value);
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     const newErrors = {};
@@ -30,7 +50,6 @@ const ContactForm = () => {
     setErrors(newErrors);
 
     if (Object.keys(newErrors).length === 0) {
-      // здесь логика отправки формы
       alert("Форма успешно отправлена!");
     }
   };
@@ -39,13 +58,15 @@ const ContactForm = () => {
     <section id="contact-form" className="contact-form">
       <div className="form-container">
         <div className="contact-left">
-          <h1 className="form-title">Свяжитесь<br />с нами</h1>
+          <h1 className="form-title">
+            Свяжитесь<br />с нами
+          </h1>
           <form onSubmit={handleSubmit}>
             <input
               type="text"
               placeholder="Введите своё ФИО"
               value={name}
-              onChange={(e) => setName(e.target.value.slice(0, 30))}
+              onChange={handleNameChange}
               style={{ borderBottom: errors.name ? "2px solid red" : "" }}
             />
             {errors.name && <div className="error-message">{errors.name}</div>}
@@ -54,9 +75,7 @@ const ContactForm = () => {
               type="email"
               placeholder="Введите свой e-mail"
               value={email}
-              onChange={(e) =>
-                setEmail(e.target.value.replace(/[а-яёА-ЯЁ]/g, ""))
-              }
+              onChange={(e) => setEmail(e.target.value.replace(/[а-яёА-ЯЁ]/g, ""))}
               style={{ borderBottom: errors.email ? "2px solid red" : "" }}
             />
             {errors.email && <div className="error-message">{errors.email}</div>}
